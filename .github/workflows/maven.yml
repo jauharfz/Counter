@@ -1,0 +1,50 @@
+# This workflow will build a Java project with Maven, and cache/restore any dependencies to improve the workflow execution time
+# For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-maven
+# This workflow demonstrates automatic compilation, testing, and error detection via GitHub Actions
+
+name: Maven Build and Test
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  build:
+    name: Build and Test
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up JDK 11
+      uses: actions/setup-java@v3
+      with:
+        java-version: '11'
+        distribution: 'temurin'
+        cache: maven
+
+    - name: Clean project
+      run: mvn clean
+
+    - name: Compile source code
+      run: mvn compile
+
+    - name: Compile test code
+      run: mvn test-compile
+
+    - name: Run unit tests
+      run: mvn test
+
+    - name: Package application
+      run: mvn package
+
+    - name: Build success notification
+      if: success()
+      run: echo "✅ Build successful! All tests passed."
+
+    - name: Build failure notification
+      if: failure()
+      run: echo "❌ Build failed! Check the error messages above."
