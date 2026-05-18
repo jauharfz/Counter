@@ -48,3 +48,9 @@ jobs:
     - name: Build failure notification
       if: failure()
       run: echo "❌ Build failed! Check the error messages above."
+
+    - name: Build, test, and analyze
+      env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      run: mvn verify sonar:sonar -Dsonar.host.url=https://sonarcloud.io -Dsonar.organization=jatihusen -Dsonar.projectKey=jatihusen_Basic-Java-Maven
