@@ -43,8 +43,8 @@ jobs:
 
     - name: Build success notification
       if: success()
-      run: echo "✅ Build successful! All tests passed."
+      run: echo "Build successful! All tests passed."
 
     - name: Build failure notification
       if: failure()
-      run: echo "❌ Build failed! Check the error messages above."
+      run: echo "Build failed! Check the error messages above."
